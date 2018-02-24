@@ -3,7 +3,7 @@ Transform: "AWS::Serverless-2016-10-31"
 
 Parameters:
   CanarySchedule:
-    Description: Rate to trigger a transaction (ex: "1 minute" or "3 hours")
+    Description: 'Rate to trigger a transaction (ex: "1 minute" or "3 hours")'
     Type: String
     Default: 5 minutes
   TransactionDistribution:
@@ -19,17 +19,17 @@ Resources:
     Type: AWS::Serverless:Function
     Properties:
       Description: Dummy lambda to run canary against
-      Handler: build/bin/dummy
+      Handler: bin/dummy
       Runtime: go1.x
-      CodeUri: build
+      CodeUri: bin
 
   Canary:
     Type: AWS::Serverless::Function
     Properties:
       Description: Canary transaction generator
-      Handler: build/bin/main
+      Handler: bin/canary
       Runtime: go1.x
-      CodeUri: build
+      CodeUri: .
       Timeout: 300
       Tracing: Active
       Environment:

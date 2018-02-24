@@ -3,11 +3,16 @@ version: 0.2
 phases:
   install:
     commands:
-    - env GOPATH=$PWD go env
-    - env GOPATH=$PWD go version
+    - make env
   build:
     commands:
-    - env GOPATH=$PWD go get ./src/canary/...
+    - make build
+    - make package
   post_build:
     commands:
     - ls *
+
+artifacts:
+  type: zip
+  files:
+  - template.yml
