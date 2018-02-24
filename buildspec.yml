@@ -15,4 +15,4 @@ phases:
 artifacts:
   type: zip
   files:
-  - template.yml
+  - processed-template.yml

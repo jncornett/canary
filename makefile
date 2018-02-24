@@ -14,4 +14,4 @@ build:
 
 package:
 	echo $(PROFILE)
-	aws cloudformation package --template-file template.yml --s3-bucket ${STAGING_BUCKET} ${PROFILE_ARG}
+	aws cloudformation package --output-template-file processed-template.yml --template-file template.yml --s3-bucket ${STAGING_BUCKET} ${PROFILE_ARG}
