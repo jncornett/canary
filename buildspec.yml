@@ -3,8 +3,8 @@ version: 0.2
 phases:
   install:
     commands:
-    - go env
-    - go version
+    - env GOPATH=$PWD go env
+    - env GOPATH=$PWD go version
   build:
     commands:
-    - go get ./src/canary/...
+    - env GOPATH=$PWD go get ./src/canary/...
