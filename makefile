@@ -1,4 +1,4 @@
 GOPATH=$(PWD)
 
 default: 
-	env
+	go get ./src/canary/...
