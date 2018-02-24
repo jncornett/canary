@@ -1,6 +1,10 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+    - echo GOPATH - $GOPATH
+    - echo PWD - $PWD
   build:
     commands:
-      - make
+    - make
