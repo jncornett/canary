@@ -1,2 +1,4 @@
+GOPATH=$(PWD)
+
 default: 
-	echo hi
+	env
