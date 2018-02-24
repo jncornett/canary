@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
+
+Parameters:
+  CanarySchedule:
+    Description: Rate to trigger a transaction (ex: "1 minute" or "3 hours")
+    Type: String
+    Default: 5 minutes
+  TransactionDistribution:
+    Description: Method for distributing load across possible transactions
+    Type: String
+    AllowedValues: [ random ]
+    Default: random
+  PolicyArns:
+    Description: Policy ARNs for policies to attach to the canary
+
+Resources:
+  Dummy:
+    Type: AWS::Serverless:Function
+    Properties:
+      Description: Dummy lambda to run canary against
+      Handler: build/bin/dummy
+      Runtime: go1.x
+      CodeUri: build
+
+  Canary:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Canary transaction generator
+      Handler: build/bin/main
+      Runtime: go1.x
+      CodeUri: build
+      Timeout: 300
+      Tracing: Active
+      Environment:
+        Variables:
+          TransactionDistribution: !Ref TransactionDistribution
+      Events:
+        Tick:
+          Type: Schedule
+          Properties:
+            Schedule: !Sub "rate(${CanarySchedule})"
+      Policies:
+      - LambdaInvokePolicy:
+        FunctionName: !Ref Dummy
