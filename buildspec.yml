@@ -8,3 +8,6 @@ phases:
   build:
     commands:
     - env GOPATH=$PWD go get ./src/canary/...
+  post_build:
+    commands:
+    - ls *
