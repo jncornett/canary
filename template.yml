@@ -11,12 +11,10 @@ Parameters:
     Type: String
     AllowedValues: [ random ]
     Default: random
-  PolicyArns:
-    Description: Policy ARNs for policies to attach to the canary
 
 Resources:
   Dummy:
-    Type: AWS::Serverless:Function
+    Type: AWS::Serverless::Function
     Properties:
       Description: Dummy lambda to run canary against
       Handler: bin/dummy
@@ -30,8 +28,6 @@ Resources:
       Handler: bin/canary
       Runtime: go1.x
       CodeUri: .
-      Timeout: 300
-      Tracing: Active
       Environment:
         Variables:
           TransactionDistribution: !Ref TransactionDistribution
@@ -40,6 +36,3 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: !Sub "rate(${CanarySchedule})"
-      Policies:
-      - LambdaInvokePolicy:
-        FunctionName: !Ref Dummy

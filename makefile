@@ -13,5 +13,7 @@ build:
 	go get ./src/canary/...
 
 package:
-	echo $(PROFILE)
 	aws cloudformation package --output-template-file processed-template.yml --template-file template.yml --s3-bucket ${STAGING_BUCKET} ${PROFILE_ARG}
+
+deploy:
+	aws cloudformation deploy --stack-name ${STACK_NAME} --template-file processed-template.yml --capabilities CAPABILITY_IAM ${PROFILE_ARG}
