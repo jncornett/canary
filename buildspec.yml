@@ -5,6 +5,8 @@ phases:
     commands:
     - echo GOPATH - $GOPATH
     - echo PWD - $PWD
+    - go env
+    - go version
   build:
     commands:
     - make
